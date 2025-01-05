@@ -1,0 +1,1 @@
+docker run --gpus all -d -v $(pwd):/workspace/Cuda-Kernels --privileged=true --net=host --shm-size=8g --ulimit memlock=-1 --name cuda-kernels-$(whoami) whatcanyousee/cuda-kernels sleep infinity

@@ -1,0 +1,8 @@
+*
+!.gitignore
+!*.cu
+!*.cpp
+!*.h
+!*.py
+!*.sh
+!*/
