@@ -16,6 +16,14 @@
 
 ![thread_index](./photos/thread_index.png)
 
+## 程序与硬件对应
+
+核函数在每个线程中运行，指令都相同
+
+![program_hardware_map](./photos/program_hardware.png)
+
+**执行模型中，一个kernel对应一个Grid**
+
 ## 优化矩阵乘
 
 ### 使用Share Memory
@@ -122,3 +130,5 @@ for (uint resIdx = 0; resIdx < TM; ++resIdx) {
   C[(threadRow * TM + resIdx) * N + threadCol] = threadResults[resIdx];
 }
 ```
+
+## 优化Reduce
