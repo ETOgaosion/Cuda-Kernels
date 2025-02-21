@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
 #include <cuda_runtime.h>
+#include <thread>
+#include <chrono>
+#include <vector>
 
 __global__ void dummyKernel(float *a, int max_iter) {
     int idx = threadIdx.x + blockDim.x * blockIdx.x;
@@ -60,6 +63,19 @@ int main(int argc, char **argv) {
         max_iter = std::stoi(argv[4]);
     }
 
-    occupyGPU(deviceIndex, gpuRatio, memRatio, max_iter);
+    int deviceCount = 0;
+    cudaGetDeviceCount(&deviceCount);
+    if (deviceIndex >= deviceCount) {
+        std::vector<std::thread> occupyThreads;
+        for (int i = 0; i < deviceCount; i++) {
+            occupyThreads.emplace_back(occupyGPU(i, gpuRatio, memRatio, max_iter));
+        }
+        for (auto &it : occupyThreads) {
+            it.join();
+        }
+    }
+    else {
+        occupyGPU(deviceIndex, gpuRatio, memRatio, max_iter);
+    }
     return 0;
 }
