@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
     if (deviceIndex >= deviceCount) {
         std::vector<std::thread> occupyThreads;
         for (int i = 0; i < deviceCount; i++) {
-            occupyThreads.emplace_back(occupyGPU(i, gpuRatio, memRatio, max_iter));
+            occupyThreads.emplace_back(occupyGPU, i, gpuRatio, memRatio, max_iter);
         }
         for (auto &it : occupyThreads) {
             it.join();
